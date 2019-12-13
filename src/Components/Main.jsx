@@ -22,6 +22,15 @@ class Main extends React.Component {
             this.fetchProducts()
         }, 1500);
     }
+    handleChange = (e) => {
+        e.preventDefault()
+        console.log(e.target.value)
+        const products = this.state.products
+        const filtered = products.filter(proproducts.category = e.target.value)
+        this.setState({
+            products: filtered,
+        })
+    }
     fetchProducts = async() => {
         let response = await fetch("http://localhost:4000/products",{
             method: "GET"
@@ -36,13 +45,12 @@ class Main extends React.Component {
     render() { 
         return (
             <Container fluid className="main-container" style={{backgroundColor: this.state.backgroundColor}}>
-            {this.state.isLoading ? <div style={override}><div><h2 className="loader-title">AMAZON</h2></div><DotLoader size={70} style={{marginLeft: "150px"}} color={'#FF2970'} /></div> : this.state.products && <>  <div> <Label for="exampleSelect">Select</Label>
-        <Input type="select" name="select" id="exampleSelect">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+            {this.state.isLoading ? <div style={override}><div><h2 className="loader-title">AMAZON</h2></div><DotLoader size={70} style={{marginLeft: "150px"}} color={'#FF2970'} /></div> : this.state.products && <>  <div style={{display: "block"}}> <Label for="exampleSelect">Select category</Label>
+        <Input onChange={this.handleChange} type="select" name="select" id="exampleSelect">
+          <option>smartphones</option>
+          <option>cups</option>
+          <option>books</option>
+          <option>clothes</option>
         </Input> </div>  {this.state.products.map((pr, i) => <SingleProduct product={pr} key={i} />)}</>}
             </Container> 
         );
