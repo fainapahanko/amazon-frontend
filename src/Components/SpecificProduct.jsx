@@ -1,12 +1,68 @@
 import React from 'react';
+import {Container, Row, Col, Button} from 'reactstrap'
+import { DotLoader } from 'react-spinners';
+import { withRouter} from 'react-router-dom'
+const override = {
+    position: "absolute",
+    top: "30%",
+    left: "40%"
+}
+
+const divStyle = {
+    width: "100%",
+    minHeight: "60px",
+    backgroundColor: "white",
+    fontSize: "20px",
+}
 
 class SpecificProduct extends React.Component {
-    state = {  }
+    state = { 
+        product: {},
+        isLoading: true
+     }
+    componentDidMount = () => {
+        console.log(this.props.match.params.id)
+        setTimeout(() => {
+            this.fetchProduct()
+        }, 1500);
+    }
+    fetchProduct = async()=>{
+        let response = await fetch("http://localhost:4000/products/" + this.props.match.params.id, {
+            method: "GET"
+        })
+        let product = await response.json()
+        this.setState({
+            product: product,
+            isLoading: false,
+        })
+        console.log(this.state)
+    }
     render() { 
         return ( 
-            <h1>Lol</h1>
+            <Container fluid style={{backgroundColor: "#D7E1E9", minHeight: "100vh", padding: "50px 100px"}} >
+                {this.state.isLoading ? <div style={override}><div><h2 className="loader-title">AMAZON</h2></div><DotLoader size={70} style={{marginLeft: "150px"}} color={'#FF2970'} /></div>  : 
+                <Row>
+                    <Col md="4">
+                        <img src={this.state.product.imageUrl} alt=""/>
+                    </Col>
+                    <Col md="8">
+                       <div style={divStyle} className="mb-3 px-3">
+                           <p>{this.state.product.name}</p>
+                       </div>
+                       <div style={divStyle} className="my-3 px-3">
+                           <p>{this.state.product.brand}</p>
+                       </div>
+                       <div style={divStyle} className="my-3 px-3">
+                           <p>{this.state.product.description}</p>
+                       </div>
+                       <div>
+                           <Button>Update</Button>
+                        </div>
+                    </Col>
+                </Row>}
+            </Container>
          );
     }
 }
  
-export default SpecificProduct;
+export default withRouter(SpecificProduct);

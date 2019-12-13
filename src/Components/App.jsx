@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import NavigationBar from './NavigationBar'
 import AddProduct from './AddProduct'
 import Main from './Main'
@@ -14,7 +14,9 @@ class App extends React.Component {
                 <NavigationBar />
                 <Route path="/" exact component={Main} />
                 <Route path="/addProduct" component={AddProduct} />
-                <Route path="/details/:id" components={SpecificProduct} />
+                <Switch>
+                    <Route path="/details/:id" component={SpecificProduct} />
+                </Switch>
             </Router>
         );
     }

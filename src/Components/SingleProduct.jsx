@@ -12,7 +12,7 @@ class SingleProduct extends React.Component {
         return ( 
             <div className="box">
             <Card>
-              <Link to={"/details/"+this.props.product._id}>
+              <Link to={"/details/" + this.props.product._id} style={{ textDecoration: 'none' , color: "black"}}>
               <CardImg top width="100%" src={this.props.product.imageUrl} alt="Card image cap" />
               <CardBody>
                 <CardTitle>{this.props.product.name}</CardTitle>
