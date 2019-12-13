@@ -6,8 +6,46 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
+@import url('https://fonts.googleapis.com/css?family=EB+Garamond&display=swap');
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.loader-title {
+  font-size: 40px;
+}
+
+.main-container {
+  padding: 40px 90px !important;
+  columns: 4;
+  column-gap: 40px;
+  margin: 0px !important;
+}
+.main-container .box {
+  border-radius: 20px;
+  width: 100%;
+  margin: 0 0 20px;
+  background: #fff;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.card-title{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  margin: 0px !important;
+}
+.card-subtitle{
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.card-text{
+  font-family: 'EB Garamond', serif;
+}
+.main-container .box img {
+  max-width: 100%;
 }
