@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
@@ -11,6 +12,7 @@ class SingleProduct extends React.Component {
         return ( 
             <div className="box">
             <Card>
+              <Link to={"/details/"+this.props.product._id}>
               <CardImg top width="100%" src={this.props.product.imageUrl} alt="Card image cap" />
               <CardBody>
                 <CardTitle>{this.props.product.name}</CardTitle>
@@ -18,6 +20,7 @@ class SingleProduct extends React.Component {
                 <CardText>{this.props.product.description} </CardText>
                 <Button>Buy</Button>
               </CardBody>
+              </Link>
             </Card>
           </div>
         );
