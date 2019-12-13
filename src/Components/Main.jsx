@@ -25,11 +25,6 @@ class Main extends React.Component {
     handleChange = (e) => {
         e.preventDefault()
         console.log(e.target.value)
-        const products = this.state.products
-        const filtered = products.filter(proproducts.category = e.target.value)
-        this.setState({
-            products: filtered,
-        })
     }
     fetchProducts = async() => {
         let response = await fetch("http://localhost:4000/products",{
@@ -51,7 +46,8 @@ class Main extends React.Component {
           <option>cups</option>
           <option>books</option>
           <option>clothes</option>
-        </Input> </div>  {this.state.products.map((pr, i) => <SingleProduct product={pr} key={i} />)}</>}
+        </Input> </div>  {this.state.products.map((pr, i) => <SingleProduct product={pr} key={i} />)}
+        </>}
             </Container> 
         );
     }
