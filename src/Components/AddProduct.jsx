@@ -45,7 +45,7 @@ class AddProduct extends React.Component {
             isLoading: true
         })
         console.log(this.state.obj)
-        let response = await fetch("http://localhost:4000/books",{
+        let response = await fetch("https://amazon-be.herokuapp.com/books",{
             method: "POST",
             body: JSON.stringify(this.state.obj),
             headers: {
@@ -76,16 +76,20 @@ class AddProduct extends React.Component {
                 {this.state.isLoading ? <div style={override}><div><h2 className="loader-title">AMAZON</h2></div><DotLoader size={70} style={{marginLeft: "150px"}} color={'#FF2970'} /></div> :<div style={{fontSize: "24px"}}>
             <Form onSubmit={this.addProduct}>
             <FormGroup>
-                <Label for="exampleEmail">Name of product</Label>
-                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="name" />
+                <Label for="exampleEmail">Book title</Label>
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="title" />
             </FormGroup>
             <FormGroup>
-                <Label for="examplePassword">Brand</Label>
-                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="brand" />
+                <Label for="exampleEmail">Book asin</Label>
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="asin" />
             </FormGroup>
             <FormGroup>
-                <Label for="examplePassword">Description</Label>
-                <Input onChange={this.handleChange} required style={{height: "250px"}} type="text" id="description" />
+                <Label for="examplePassword">Price</Label>
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="price" />
+            </FormGroup>
+            <FormGroup>
+                <Label for="examplePassword">Image url</Label>
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="img" />
             </FormGroup>
             <FormGroup>
                 <Label for="exampleSelect">Choose category</Label>
@@ -96,10 +100,6 @@ class AddProduct extends React.Component {
                     <option>history</option>
                     <option>fantasy</option>
                 </Input>
-            </FormGroup>
-            <FormGroup>
-                <Label for="examplePassword">ImageURL</Label>
-                <Input onChange={this.handleChange} required style={{height: "50px"}} type="file" id="imageUrl" />
             </FormGroup>
             <Button type="submit">Submit</Button>
             </Form>

@@ -15,7 +15,7 @@ class App extends React.Component {
                 <Route path="/" exact component={Main} />
                 <Route path="/addProduct" component={AddProduct} />
                 <Switch>
-                    <Route path="/details/:id" component={SpecificProduct} />
+                    <Route path="/details/:asin" component={SpecificProduct} />
                 </Switch>
             </Router>
         );

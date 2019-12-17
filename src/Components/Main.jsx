@@ -29,11 +29,11 @@ class Main extends React.Component {
             isLoading: true,
             backgroundColor: "#D7E1E9",
         })
-        const books = this.state.books.filter(book => book.category === e.target.value)
+        const booksFiltered = this.state.books.filter(book => book.category === e.target.value)
         setTimeout(() => {
             this.setState({
             isLoading: false,
-            filtered: books,
+            filtered: booksFiltered,
             backgroundColor: "#D7E1E9",
             })
         }, 1000)
@@ -42,7 +42,7 @@ class Main extends React.Component {
         this.setState({
             backgroundColor: "white",
         })
-        let response = await fetch("http://localhost:4000/books",{
+        let response = await fetch("https://amazon-be.herokuapp.com/books",{
             method: "GET"
         })
         let books = await response.json()
@@ -67,9 +67,9 @@ class Main extends React.Component {
                     <option>history</option>
                     <option>fantasy</option>
                     </Input> 
-                    </div> <div className="main-container"> {this.state.filtered.map((pr, i) => <SingleProduct product={pr} key={i} /> )} </div></>
+                    </div> <div className="main-container"> {this.state.filtered.map((pr, i) => <SingleProduct book={pr} key={i} /> )} </div></>
                                     : 
-                    <><div style={{display: "block", padding: "50px 100px"}}> <Label for="exampleSelect">Select category</Label>
+                    <><div style={{display: "block", padding: "50px 200px"}}> <Label for="exampleSelect">Select category</Label>
                      <Input onChange={this.handleChange} type="select" name="select" id="exampleSelect">
                     <option>scifi</option>
                     <option>romance</option>
