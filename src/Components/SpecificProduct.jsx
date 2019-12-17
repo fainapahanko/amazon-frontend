@@ -27,21 +27,21 @@ class SpecificProduct extends React.Component {
             this.fetchProduct()
         }, 1500);
     }
-    addComment = async() => {
-        this.setState({
-            isLoading: true
-        })
-        let response = await fetch("http://localhost:4000/reviews",{
-            method: "POST",
-            body: JSON.stringify(this.state.obj),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        return response.json()
-    }
+    // addComment = async() => {
+    //     this.setState({
+    //         isLoading: true
+    //     })
+    //     let response = await fetch("http://localhost:4000/reviews",{
+    //         method: "POST",
+    //         body: JSON.stringify(this.state.obj),
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     })
+    //     return response.json()
+    // }
     fetchProduct = async()=>{
-        let response = await fetch("http://localhost:4000/products/" + this.props.match.params.id, {
+        let response = await fetch("http://localhost:4000/books/" + this.props.match.params.id, {
             method: "GET"
         })
         let product = await response.json()
@@ -56,18 +56,18 @@ class SpecificProduct extends React.Component {
             <Container fluid style={{backgroundColor: "#D7E1E9", minHeight: "100vh", padding: "50px 100px"}} >
                 {this.state.isLoading ? <div style={override}><div><h2 className="loader-title">AMAZON</h2></div><DotLoader size={70} style={{marginLeft: "150px"}} color={'#FF2970'} /></div>  : 
                 <Row>
-                    <Col md="4">
-                        <img src={this.state.product.imageUrl} alt=""/>
+                    <Col md="5">
+                        <img src={this.state.product.img} width="100%" alt=""/>
                     </Col>
-                    <Col md="8">
+                    <Col md="7">
                        <div style={divStyle} className="mb-3 px-3">
-                           <p>{this.state.product.name}</p>
+                           <p>{this.state.product.title}</p>
                        </div>
                        <div style={divStyle} className="my-3 px-3">
-                           <p>{this.state.product.brand}</p>
+                           <p>{this.state.product.price}</p>
                        </div>
                        <div style={divStyle} className="my-3 px-3">
-                           <p>{this.state.product.description}</p>
+                           <p>{this.state.product.asin}</p>
                        </div>
                        <div>
                            <Button>Update</Button>
@@ -93,7 +93,7 @@ class SpecificProduct extends React.Component {
                       <Button type="submit">Submit</Button>
                       </Form>
                       </Col>
-                      </Row>}
+                    </Row>}
             </Container>
          );
     }

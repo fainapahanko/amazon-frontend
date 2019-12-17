@@ -19,7 +19,13 @@ class AddProduct extends React.Component {
     }
     handleChange = (e)  => {
         e.preventDefault()
-        this.state.obj[e.target.id] = e.target.value
+        if(e.target.id === "imageUrl"){
+            let file = e.target.files[0]
+            this.state.file = file
+            console.log(this.state)
+        }else {
+            this.state.obj[e.target.id] = e.target.value
+        }
     }
 
     componentDidMount = () => {
@@ -31,11 +37,15 @@ class AddProduct extends React.Component {
     }
 
     addProduct = async() => {
+        console.log(this.state)
+        let formData = new FormData()
+        const file = this.state.file
+        formData.append("image", file)
         this.setState({
             isLoading: true
         })
         console.log(this.state.obj)
-        let response = await fetch("http://localhost:4000/products/",{
+        let response = await fetch("http://localhost:4000/books",{
             method: "POST",
             body: JSON.stringify(this.state.obj),
             headers: {
@@ -80,15 +90,16 @@ class AddProduct extends React.Component {
             <FormGroup>
                 <Label for="exampleSelect">Choose category</Label>
                 <Input onChange={this.handleChange} required type="select" id="category">
-                    <option>books</option>
-                    <option>smartphones</option>
-                    <option>clothes</option>
-                    <option>cups</option>
+                    <option>scifi</option>
+                    <option>romance</option>
+                    <option>horror</option>
+                    <option>history</option>
+                    <option>fantasy</option>
                 </Input>
             </FormGroup>
             <FormGroup>
                 <Label for="examplePassword">ImageURL</Label>
-                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="imageUrl" />
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="file" id="imageUrl" />
             </FormGroup>
             <Button type="submit">Submit</Button>
             </Form>
