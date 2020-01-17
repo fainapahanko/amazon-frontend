@@ -18,7 +18,7 @@ const divStyle = {
 
 class SpecificProduct extends React.Component {
     state = { 
-        book: {},
+        product: {},
         comment: {},
         comments: [],
         isLoading: true,
@@ -32,41 +32,56 @@ class SpecificProduct extends React.Component {
     }
     handleChange = (e) => {
         e.preventDefault()
-        let commentId = e.target.id
-        let input = e.target.value
-        this.state.comment[commentId] = input
+        if(e.target.id ===  "rate") {
+            this.setState({
+                comment: Object.assign(this.state.comment, {[e.target.id]:parseInt(e.target.value)} )
+            })
+        } else {
+            this.setState({
+                comment: Object.assign(this.state.comment, {[e.target.id]:e.target.value} )
+            })
+        }
     }
     handleSubmit = async(e) => {
         e.preventDefault()
-        let id = this.props.match.params.asin
-        console.log(id.toString())
+        console.log(this.state.comment)
         try{
-            let response = await fetch("https://amazon-be.herokuapp.com/comments/" + id.toString(),{
+            let response = await fetch(`http://localhost:4400/reviews/${this.props.match.params.id}`,{
                 method: "POST",
                 body: JSON.stringify(this.state.comment),
                 headers: {
-                    "Content-Type": "application/json"
+                    "content-type": "application/json"
                 }
             })
+            this.fetchComments()
             return response.json()
         } catch(err){
             console.log(err)
         } 
     }
     fetchProduct = async()=>{
-        let response = await fetch("https://amazon-be.herokuapp.com/books/" + this.props.match.params.asin, {
+        let response = await fetch("http://localhost:4400/products/" + this.props.match.params.id, {
             method: "GET"
         })
         let product = await response.json()
         this.setState({
-            book: product,
+            product: product,
             isLoading: false,
         })
         console.log(this.state)
     }
+    deleteProduct = async() => {
+        try{
+            let response = await fetch(`http://localhost:4400/products/${this.props.match.params.id}`, {
+                method: "DELETE"
+            })
+            return response
+        } catch(err){
+            console.log(err)
+        }
+    }
     fetchComments = async() => {
-        let id = this.props.match.params.asin
-        let response = await fetch("https://amazon-be.herokuapp.com/comments/" + id.toString(),{
+        let response = await fetch(`http://localhost:4400/products/${this.props.match.params.id}/reviews`,{
             method: "GET"
         })
         let comment = await response.json()
@@ -81,32 +96,44 @@ class SpecificProduct extends React.Component {
                 {this.state.isLoading ? <div style={override}><div><h2 className="loader-title">AMAZON</h2></div><DotLoader size={70} style={{marginLeft: "150px"}} color={'#FF2970'} /></div>  : 
                 <Row>
                     <Col md="5">
-                        <img src={this.state.book.img} width="100%" alt=""/>
+                        <img src={this.state.product.imageurl} width="100%" alt=""/>
                     </Col>
                     <Col md="7">
                        <div style={divStyle} className="mb-3 px-3">
-                           <p>Book title: {this.state.book.title}</p>
+                           <p>Product name: {this.state.product.name}</p>
+                       </div>
+                       <div style={divStyle} className="mb-3 px-3">
+                           <p>Product brand: {this.state.product.brand}</p>
                        </div>
                        <div style={divStyle} className="my-3 px-3">
-                           <p>Price: {this.state.book.price} $</p>
+                           <p>Description: {this.state.product.description} </p>
                        </div>
                        <div style={divStyle} className="my-3 px-3">
-                           <p>Book asin: {this.state.book.asin}</p>
+                           <p>Category: {this.state.product.category} </p>
+                       </div>
+                       <div style={divStyle} className="my-3 px-3">
+                           <p>Product price: {this.state.product.price} $</p>
                        </div>
                        <div>
-                           <Button>Update</Button>
+                           <Button onClick={this.deleteProduct}>Delete</Button>
                         </div>
                     </Col>
                     <Col md="12">
+                        <h1 className="mt-4" style={{fontSize: "24px"}}> Add Comment</h1>
                         <Form onSubmit={this.handleSubmit}>
-                        <h1> Add Comments</h1>
                         <FormGroup>
-                        <Label for="Comments">User name</Label>
-                        <Input onChange={this.handleChange} type="text" name="comments" id="userName" placeholder="Enter your comments" />
+                        <Label for="Comments">Rate</Label>
+                        <Input onChange={this.handleChange} type="select" id="rate" placeholder="Enter your comments">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        </Input>
                       </FormGroup>
                       <FormGroup>
                         <Label for="rating">Comment</Label>
-                        <Input onChange={this.handleChange} type="text" name="select" id="text" />
+                        <Input onChange={this.handleChange} type="text" id="comment" />
                       </FormGroup>
                       <Button type="submit">Submit</Button>
                       </Form>

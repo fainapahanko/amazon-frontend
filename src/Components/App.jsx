@@ -7,7 +7,6 @@ import SpecificProduct from './SpecificProduct'
 import "../index.css"
 
 class App extends React.Component {
-    state = {  }
     render() { 
         return ( 
             <Router>
@@ -15,7 +14,7 @@ class App extends React.Component {
                 <Route path="/" exact component={Main} />
                 <Route path="/addProduct" component={AddProduct} />
                 <Switch>
-                    <Route path="/details/:asin" component={SpecificProduct} />
+                    <Route path="/details/:id" component={SpecificProduct} />
                 </Switch>
             </Router>
         );

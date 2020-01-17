@@ -6,7 +6,7 @@ class Succes extends React.Component {
     render() { 
         return ( 
             <Alert color="success">
-            This is a success alert — check it out!
+            saved successfully
           </Alert>
          );
     }

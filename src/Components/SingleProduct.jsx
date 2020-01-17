@@ -8,18 +8,21 @@ import {
 
 class SingleProduct extends React.Component {
     state = {  }
+    addToCartSingle = () => {
+      this.props.addToCart(this.props.product.price)
+    }
     render() { 
         return ( 
             <div className="box">
             <Card>
-              <Link to={"/details/" + this.props.book.asin} style={{ textDecoration: 'none' , color: "black"}}>
-              <CardImg top width="100%" src={this.props.book.img} alt="Card image cap" />
-              <CardBody>
-                <CardTitle>{this.props.book.title}</CardTitle>
-                <CardSubtitle>{this.props.book.price}$</CardSubtitle>
-                <Button>Buy</Button>
-              </CardBody>
+              <Link to={"/details/" + this.props.product._id} style={{ textDecoration: 'none' , color: "black"}}>
+              <CardImg top width="100%" src={this.props.product.imageurl} alt="Card image cap" />
               </Link>
+              <CardBody>
+                <CardTitle>{this.props.product.name}</CardTitle>
+                <CardSubtitle>{this.props.product.price}$</CardSubtitle>
+                <Button onClick={this.addToCartSingle}>Buy</Button>
+              </CardBody>
             </Card>
           </div>
         );

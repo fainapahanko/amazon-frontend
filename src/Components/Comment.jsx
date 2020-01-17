@@ -11,7 +11,7 @@ class Comment extends React.Component {
     state = {  }
 
     toDelete = async() => {
-        let response = await fetch("https://amazon-be.herokuapp.com/comments/" + this.props.comment.commentID, {
+        let response = await fetch("http://localhost:4400/comments/" + this.props.comment.commentID, {
             method: "DELETE"
         })
         return response
@@ -19,8 +19,7 @@ class Comment extends React.Component {
     render() { 
         return ( 
             <div className="my-4" style={divStyle}>
-                <div className="pt-3 pl-3" style={{fontSize: "24px"}}>{this.props.comment.userName}</div> <br/>
-                <div className="pl-3" style={{fontSize: "20px"}}>{this.props.comment.text}</div>
+                <div className="pl-3" style={{fontSize: "20px"}}>{this.props.comment.comment}</div>
                 <Moment className="pl-3"  fromNow>{this.props.comment.createdAt}</Moment>
                 <div  className="pl-3 pb-3 pt-2" ><Button onClick={this.toDelete}>Delete</Button></div>
             </div>

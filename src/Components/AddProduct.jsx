@@ -21,10 +21,13 @@ class AddProduct extends React.Component {
         e.preventDefault()
         if(e.target.id === "imageUrl"){
             let file = e.target.files[0]
-            this.state.file = file
-            console.log(this.state)
+            this.setState({
+                file: file
+            })
         }else {
-            this.state.obj[e.target.id] = e.target.value
+            this.setState({
+                obj: Object.assign(this.state.obj, {[e.target.id]:e.target.value})
+            })
         }
     }
 
@@ -36,21 +39,20 @@ class AddProduct extends React.Component {
         }, 1000);
     }
 
-    addProduct = async() => {
+    addProduct = async(e) => {
+        e.preventDefault()
         console.log(this.state)
         let formData = new FormData()
         const file = this.state.file
-        formData.append("image", file)
-        this.setState({
-            isLoading: true
-        })
-        console.log(this.state.obj)
-        let response = await fetch("https://amazon-be.herokuapp.com/books",{
+        formData.append("imageUrl", file)
+        formData.append("name", this.state.obj.name)
+        formData.append("description", this.state.obj.description)
+        formData.append("brand", this.state.obj.brand)
+        formData.append("price", this.state.obj.price)
+        formData.append("category", this.state.obj.category)
+        let response = await fetch("http://localhost:4400/products",{
             method: "POST",
-            body: JSON.stringify(this.state.obj),
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            body: formData
         })
         if(response.ok) {
             setTimeout(() => {
@@ -67,7 +69,6 @@ class AddProduct extends React.Component {
                 })
             }, 1000);
         }
-        console.log(this.state)
         return response.json()
     }
     render() { 
@@ -76,29 +77,32 @@ class AddProduct extends React.Component {
                 {this.state.isLoading ? <div style={override}><div><h2 className="loader-title">AMAZON</h2></div><DotLoader size={70} style={{marginLeft: "150px"}} color={'#FF2970'} /></div> :<div style={{fontSize: "24px"}}>
             <Form onSubmit={this.addProduct}>
             <FormGroup>
-                <Label for="exampleEmail">Book title</Label>
-                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="title" />
+                <Label for="exampleEmail">Product name</Label>
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="name" />
             </FormGroup>
             <FormGroup>
-                <Label for="exampleEmail">Book asin</Label>
-                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="asin" />
+                <Label for="exampleEmail">Product description</Label>
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="description" />
+            </FormGroup>
+            <FormGroup>
+                <Label for="exampleEmail">Product brand</Label>
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="brand" />
             </FormGroup>
             <FormGroup>
                 <Label for="examplePassword">Price</Label>
                 <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="price" />
             </FormGroup>
             <FormGroup>
-                <Label for="examplePassword">Image url</Label>
-                <Input onChange={this.handleChange} required style={{height: "50px"}} type="text" id="img" />
+                <Label for="examplePassword">Image</Label>
+                <Input onChange={this.handleChange} required style={{height: "50px"}} type="file" id="imageUrl" />
             </FormGroup>
             <FormGroup>
                 <Label for="exampleSelect">Choose category</Label>
                 <Input onChange={this.handleChange} required type="select" id="category">
-                    <option>scifi</option>
-                    <option>romance</option>
-                    <option>horror</option>
-                    <option>history</option>
-                    <option>fantasy</option>
+                    <option>kids</option>
+                    <option>smartphones</option>
+                    <option>books</option>
+                    <option>clothes</option>
                 </Input>
             </FormGroup>
             <Button type="submit">Submit</Button>
