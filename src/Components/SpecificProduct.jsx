@@ -139,7 +139,7 @@ class SpecificProduct extends React.Component {
                       </Form>
                       </Col>
                       <Col md="12">
-                        {this.state.comments && this.state.comments.map((c,i) =>  <Comment key={i} comment={c} />)}
+                        {this.state.comments && this.state.comments.map((c,i) =>  <Comment fetchComments={this.fetchComments} key={i} comment={c} />)}
                       </Col>
                     </Row>}
             </Container>

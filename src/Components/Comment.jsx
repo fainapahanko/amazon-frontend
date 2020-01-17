@@ -11,9 +11,10 @@ class Comment extends React.Component {
     state = {  }
 
     toDelete = async() => {
-        let response = await fetch("http://localhost:4400/comments/" + this.props.comment.commentID, {
+        let response = await fetch("http://localhost:4400/reviews/" + this.props.comment._id, {
             method: "DELETE"
         })
+        this.props.fetchComments()
         return response
     }
     render() { 

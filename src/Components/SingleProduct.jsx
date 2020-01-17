@@ -8,8 +8,10 @@ import {
 
 class SingleProduct extends React.Component {
     state = {  }
-    addToCartSingle = () => {
-      this.props.addToCart(this.props.product.price)
+    addToCartSingle = (e) => {
+      e.preventDefault()
+      //this.props.incrementCart(this.props.product.price)
+      this.props.addToCart(this.props.product, this.props.product.price)
     }
     render() { 
         return ( 
